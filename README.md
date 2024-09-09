@@ -15,3 +15,5 @@ Use certbot (with nginx) or Cloudflare for SSL.
 
 
 _CSS needs lots of work._
+
+![Image demo image](/src/static/img/demo.png)
