@@ -24,11 +24,23 @@ else:
     app_port = '5714'
 
 #every how many messages should it check for cleanup
-total_msg_before_cleanup = 25
-#total msgs to always keep in db after cleanup
-total_history_keep = 200
-#messages that will appear on new client connection (loading from history)
-client_max_history_load = 25
+if environ.get('total_msg_before_cleanup') is not None:
+    total_msg_before_cleanup = os.environ['total_msg_before_cleanup']
+else:
+    total_msg_before_cleanup = '25'
+
+##total msgs to always keep in db after cleanup
+if environ.get('total_history_keep') is not None:
+    total_history_keep = os.environ['total_history_keep']
+else:
+    total_history_keep = '200'
+
+##messages that will appear on new client connection (loading from history)
+if environ.get('client_max_history_load') is not None:
+    client_max_history_load = os.environ['client_max_history_load']
+else:
+    client_max_history_load = '25'
+
 #conf end
 
 #init
