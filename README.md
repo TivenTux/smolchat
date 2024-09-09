@@ -1,7 +1,6 @@
 ### SmolChat
 Small chat app made with flask and js.
 
-
 ## Environment Variables
 
 **flask_secret_key** - flask secrey key (needs a random string), use ENV variable or edit constants/secrets.py . <br>
@@ -14,3 +13,5 @@ By default, static files will be served by flask and the app itself, if you use 
 
 Use certbot (with nginx) or Cloudflare for SSL.
 
+
+_CSS needs lots of work._
