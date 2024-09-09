@@ -120,7 +120,7 @@ def serve_site_manifest():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'site.webmanifest', mimetype='application/manifest+json')
 
-#this one handles most incoming events
+#most incoming events
 @socketio.on('session_event')
 def receive_event(payload, methods=['GET', 'POST']):
     '''
@@ -181,7 +181,6 @@ def generate_random_string(length):
     characters = string.digits
     return ''.join(random.choices(characters, k=length))
 
-#save new message to db
 def new_message(database_location, table_name, dbpayload):
     '''
     Takes dblocation, table, and payload, saves entries (messages) into db.
@@ -203,7 +202,6 @@ def new_message(database_location, table_name, dbpayload):
     return cur.lastrowid   
 
 
-#loads message history from db
 def load_messages(database_location, table_name, load_x_rows):
     '''
     Loads last x_rows (messages) from the database.
@@ -264,7 +262,6 @@ def delete_oldest_rows(database_location, table_name, row_limit):
             conn.close()
 
 
-#returns total db rows
 def get_total_rows(database_location, table_name):
     '''
     Takes db location, table, and returns total rows
