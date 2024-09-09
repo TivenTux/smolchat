@@ -16,4 +16,4 @@ Use certbot (with nginx) or Cloudflare for SSL.
 
 _still needs lots of work._
 
-![Image demo image](/src/static/img/demo.png)
+<!-- ![Image demo image](/src/static/img/demo.png) -->
