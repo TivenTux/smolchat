@@ -1,5 +1,5 @@
 function check_link_status(url) {
-    const proxiedurl = window.location.protocol + '//' + document.domain + ':' + location.port + '/proxy?url=' + url
+    const proxiedurl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
     return fetch(proxiedurl, { method: 'HEAD' }) 
         .then(response => {
             if (response.ok) {
