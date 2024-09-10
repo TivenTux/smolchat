@@ -3,13 +3,11 @@
 var socket = io.connect( window.location.protocol + '//' + document.domain + ':' + location.port);
 let sessionstatus = $('input.formsessionstatus').val()
 
-// new client connection
 socket.on('connect', function() {
     socket.emit('session_event', {
         data: 'New user connected'
     })
 
-    // new client, clean session, request chat history
     if (sessionstatus == 0) {
         socket.emit('session_event', {
             message: '15002_load_session'
@@ -61,7 +59,7 @@ socket.on('connect', function() {
 })
 
 socket.on('session_response', function(msg) {
-    // Loading chat history
+    // load history
     if (Array.isArray(msg)) {
         messages_number = msg.length - 1;
         while (messages_number != -1) {
