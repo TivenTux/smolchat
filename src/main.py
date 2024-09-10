@@ -243,12 +243,12 @@ def check_db_for_cleanup():
     global cleanup_counter
     cleanup_counter += 1
     try:
-        if cleanup_counter == total_msg_before_cleanup:
+        if cleanup_counter == int(total_msg_before_cleanup):
             total_rows = get_total_rows(message_db_location, 'messagedata')
             print(total_rows)
-            if total_rows > (total_history_keep + 50):
+            if total_rows > (int(total_history_keep) + 50):
                 delete_oldest_rows(message_db_location, 'messagedata', 50)
-        if cleanup_counter > total_msg_before_cleanup:
+        if cleanup_counter > int(total_msg_before_cleanup):
             cleanup_counter = 0
     except Exception as e:
         print(e)
