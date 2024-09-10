@@ -226,12 +226,14 @@ def load_messages(database_location, table_name, load_x_rows):
         i = 0
         previous_messages = []
         try:
-            while i < load_x_rows:
+            while i < int(load_x_rows):
                 old_msg = rows[i]
                 previous_messages.append(old_msg)
                 i += 1
+        except IndexError:
+            print('available history less than set in conf, continue')
         except Exception as e:
-            print('counting messages err, maybe less than client history option set')
+            print(e, 'counting messages err')
     except Exception as e: 
         print(e,'loading msgs err')
     return previous_messages 
