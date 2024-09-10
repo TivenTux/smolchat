@@ -1,5 +1,6 @@
 function check_link_status(url) {
-    return fetch(url, { method: 'HEAD' }) 
+    const proxiedurl = window.location.protocol + '//' + document.domain + ':' + location.port + '/proxy?url=' + url
+    return fetch(proxiedurl, { method: 'HEAD' }) 
         .then(response => {
             if (response.ok) {
                 return 'valid';

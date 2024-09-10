@@ -1,7 +1,8 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
 from datetime import datetime
 import sqlite3
+import requests
 import pytz
 import os
 from os import environ
@@ -295,6 +296,24 @@ def get_total_rows(database_location, table_name):
         if conn:
             conn.close()
 
+#cors
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+@app.route('/proxy', methods=['GET'])
+def proxy():
+    target_url = request.args.get('url')
+    if not target_url:
+        return jsonify({"error": "URL is required"}), 400
+    try:
+        response = requests.get(target_url)
+        return (response.content, response.status_code, response.headers.items())
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
