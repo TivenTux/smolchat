@@ -78,7 +78,6 @@ socket.on('connect', function() {
             console.log('empty message or status code, ignoring')
         }
 
-        //username looks normal, save cookie after name gets updated
         else if (user_name != '') {
             cookiseuserid = check_cookie_userid();
             profilepicurl = check_cookie_profilepic();
@@ -89,7 +88,6 @@ socket.on('connect', function() {
                 setCookie("remuserid", cookiseuserid, 375);
             }
 
-            //set a default pic
             if (profilepicurl == 0) {
               profilepicurl = 'static/img/defaultuser4.png'
               setCookie("remprofilepic", profilepicurl, 375);
@@ -123,7 +121,6 @@ socket.on('session_response', function(msg) {
             let finaltimemsg = datatime[0] + ":" + datatime[1];
             const datatimemsglocal = convertUTCToLocalTime(finaltimemsg);
             messages_number -= 1;
-            //get newer to older messages
             var cookieuserid = getCookie('remuserid');
 
             if (cookieuserid == datauserid) {
@@ -145,9 +142,8 @@ socket.on('session_response', function(msg) {
         }
         scrollToBottom();
     }
-      
+    
       // receiving new from event
-
     var usernametext = $('#username').val();
     var userid = getCookie('remuserid');
     var dataprofilepicurl = getCookie('remprofilepic')
@@ -183,7 +179,6 @@ socket.on('session_response', function(msg) {
     }
     scrollToBottom();
 })
-
 
 function setCookie(name, value, days) {
     var expires = "";
