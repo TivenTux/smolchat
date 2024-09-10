@@ -4,6 +4,7 @@ Small chat app made with flask and js.
 ## Environment Variables
 
 **flask_secret_key** - flask secrey key (needs a random string), use ENV variable or edit constants/secrets.py . <br>
+**app_port** - Port number the chat will bind to. Defaults to '5714'  <br>
 **total_history_keep** - Total messages to always keep in db after cleanup. Defaults to '200'. <br>
 **total_msg_before_cleanup** - Sets every how many messages should it check before removing old messages from db. Defaults to '25'.<br>
 **client_max_history_load** - Messages from history that will load on new client connections. Defaults to 25 messages. <br>
