@@ -14,7 +14,7 @@ Application will bind on all interfaces on port 5714 (unless changed). You shoul
 
 By default, static files will be served by flask and the app itself, if you use nginx you can either disable the functions in code or just not include the nginx conf static section (if you choose to use that). Websockets will still be proxied.
 
-Use certbot (with nginx) or Cloudflare for SSL.
+Use certbot (with nginx reverse proxy) or Cloudflare for SSL.
 
 
 <!-- ![Image demo image](/src/static/img/demo.png) -->
