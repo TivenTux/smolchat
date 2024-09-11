@@ -17,8 +17,6 @@ By default, static files will be served by flask and the app itself, if you use 
 Use certbot (with nginx) or Cloudflare for SSL.
 
 
-_still needs lots of work._
-
 <!-- ![Image demo image](/src/static/img/demo.png) -->
 
 <img align="center" src="https://github.com/TivenTux/smolchat/blob/dc5e7d8087d422b7c6dda5986d6e97eab12454ef/src/static/img/demo.png?raw=true" width="600"> 
