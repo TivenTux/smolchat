@@ -1,5 +1,4 @@
 
-//var socket = io.connect('http://' + document.domain + ':' + location.port);
 var socket = io.connect( window.location.protocol + '//' + document.domain + ':' + location.port);
 let sessionstatus = $('input.formsessionstatus').val()
 
@@ -33,16 +32,16 @@ socket.on('connect', function() {
         else if (user_name != '') {
             cookiseuserid = check_cookie_userid();
             profilepicurl = check_cookie_profilepic();
-            setCookie("remname", user_name, 375);
+            set_cookie("remname", user_name, 375);
 
             if (cookiseuserid == 0) {
-                cookiseuserid = generateRandomUserId(24);
-                setCookie("remuserid", cookiseuserid, 375);
+                cookiseuserid = generate_random_userid(24);
+                set_cookie("remuserid", cookiseuserid, 375);
             }
 
             if (profilepicurl == 0) {
               profilepicurl = 'static/img/defaultuser4.png'
-              setCookie("remprofilepic", profilepicurl, 375);
+              set_cookie("remprofilepic", profilepicurl, 375);
             }
             
             //push client data to server
@@ -53,7 +52,7 @@ socket.on('connect', function() {
                 profilepicurl: profilepicurl
             })
         }
-        scrollToBottom();
+        scroll_to_bottom();
         $('input.message').val('').focus()
     })
 })
@@ -71,9 +70,9 @@ socket.on('session_response', function(msg) {
 
             let datatime = datatimemsg.split(":");
             let finaltimemsg = datatime[0] + ":" + datatime[1];
-            const datatimemsglocal = convertUTCToLocalTime(finaltimemsg);
+            const datatimemsglocal = convert_UTC_to_local(finaltimemsg);
             messages_number -= 1;
-            var cookieuserid = getCookie('remuserid');
+            var cookieuserid = get_cookie('remuserid');
 
             if (cookieuserid == datauserid) {
                 if (datatextmsg == '1800028_sent_a_nudge') {
@@ -92,13 +91,13 @@ socket.on('session_response', function(msg) {
                 }
             }
         }
-        scrollToBottom();
+        scroll_to_bottom();
     }
     
       // receiving new from event
     var usernametext = $('#username').val();
-    var userid = getCookie('remuserid');
-    var dataprofilepicurl = getCookie('remprofilepic')
+    var userid = get_cookie('remuserid');
+    var dataprofilepicurl = get_cookie('remprofilepic')
     var dataotherprofilepicurl = msg.profilepicurl
     let now = new Date();
     let hours = now.getHours();
@@ -107,17 +106,17 @@ socket.on('session_response', function(msg) {
     minutes = minutes.toString().padStart(2, '0');
     let finaltime = `${hours}:${minutes}`;
 
-    const local_time = convertUTCToLocalTime(finaltime);
+    const local_time = convert_UTC_to_local(finaltime);
 
     if (userid == msg.saveduserid) {
-        // show right bubble if owner's message
+        // use right bubble if owner's message
         if (msg.message == '1800028_sent_a_nudge') {
             $('body > section > main').append('<div class="msg right-msg"> <div id="simuserimg" class="msg-img" style="background-image: url('+dataprofilepicurl+')" ></div> <div class="msg-bubble"> <div class="msg-info"> <div class="msg-info-name">' + msg.user_name + '</div> <div class="msg-info-time">' + finaltime + '</div> </div> <div class="msg-text"><div class="msg-info-nudge">' + 'sent a nudge' + '</div></div>');
         } else {
             $('body > section > main').append('<div class="msg right-msg"> <div id="simuserimg" class="msg-img" style="background-image: url('+dataprofilepicurl+')" ></div> <div class="msg-bubble"> <div class="msg-info"> <div class="msg-info-name">' + msg.user_name + '</div> <div class="msg-info-time">' + finaltime + '</div> </div> <div class="msg-text">' + msg.message + '</div>');
         }
     }
-    // otherwise use left msg bubble for others
+    // use left bubble for others
     else if (typeof msg.user_name !== 'undefined') {
         if (msg.message == '1800028_sent_a_nudge') {
             $('body > section > main').append('<div class="msg left-msg"> <div id="simotheruserimg" class="msg-img" style="background-image: url('+dataotherprofilepicurl+')" ></div> <div class="msg-bubble"> <div class="msg-info"> <div class="msg-info-name">' + msg.user_name + '</div> <div class="msg-info-time">' + finaltime + '</div> </div> <div class="msg-text"><div class="msg-info-nudge">' + 'sent a nudge' + '</div></div>')
@@ -129,10 +128,10 @@ socket.on('session_response', function(msg) {
     } else {
         console.log('empty, ignore')
     }
-    scrollToBottom();
+    scroll_to_bottom();
 })
 
-function setCookie(name, value, days) {
+function set_cookie(name, value, days) {
     var expires = "";
     if (days) {
         var date = new Date();
@@ -142,7 +141,7 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-function getCookie(name) {
+function get_cookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
@@ -155,7 +154,7 @@ function getCookie(name) {
 
 function check_cookie_username() {
     var form_username = document.getElementById("username");
-    var user = getCookie("remname");
+    var user = get_cookie("remname");
     if (user != null) {
         form_username.value = user;
         console.log('welcome back ' + user)
@@ -164,15 +163,15 @@ function check_cookie_username() {
         cookiseuserid = check_cookie_userid();
         //if no cookie generate id and cook it
         if (cookiseuserid == 0) {
-            cookiseuserid = generateRandomUserId(24);
-            setCookie("remuserid", cookiseuserid, 375);
+            cookiseuserid = generate_random_userid(24);
+            set_cookie("remuserid", cookiseuserid, 375);
             console.log('generating id');
         }
     }
 }
 
 function check_cookie_userid() {
-    var userid = getCookie("remuserid");
+    var userid = get_cookie("remuserid");
     if (userid != null) {
         return (userid)
     } else {
@@ -182,7 +181,7 @@ function check_cookie_userid() {
 }
 
 function check_cookie_profilepic() {
-    var profilepicurl = getCookie("remprofilepic");
+    var profilepicurl = get_cookie("remprofilepic");
     if (profilepicurl != null) {
         return (profilepicurl)
     } else {
@@ -191,7 +190,7 @@ function check_cookie_profilepic() {
     }
 }
 
-function generateRandomUserId(length) {
+function generate_random_userid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
@@ -201,7 +200,7 @@ function generateRandomUserId(length) {
     return result;
 }
 
-function scrollToBottom() {
+function scroll_to_bottom() {
     var chatContainer = document.getElementById("msger-chat");
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
@@ -237,12 +236,12 @@ document.getElementById("nudge_icon").addEventListener("click", function() {
         return;
     }
     var audio_nudge = new Audio('static/img/nudge.ogg');
-    var userid = getCookie("remuserid");
+    var userid = get_cookie("remuserid");
     var usernametext = $('#username').val();
     profilepicurl = check_cookie_profilepic();
     if (profilepicurl == 0) {
           profilepicurl = 'static/img/defaultuser4.png'
-          setCookie("remprofilepic", profilepicurl, 375);
+          set_cookie("remprofilepic", profilepicurl, 375);
             }
     if (userid != null && usernametext != '') {
         cookiseuserid = check_cookie_userid();
@@ -268,14 +267,11 @@ document.getElementById("nudge_icon").addEventListener("click", function() {
     }, 30000);
 });
 
-function onResize() {
-    scrollToBottom();
+function on_resize() {
+    scroll_to_bottom();
 }
-window.addEventListener('resize', onResize);
+window.addEventListener('resize', on_resize);
 
-
-// if gear icon or self profile pic clicked, ask to set new one
-// if new set pic isnt valid, then keep old
 
   document.getElementById("gear_icon").addEventListener("click", function () {
 
@@ -285,7 +281,7 @@ window.addEventListener('resize', onResize);
         check_link_status(newprofilepicinput)
           .then(status => {
               if (status === 'valid') {
-                  setCookie("remprofilepic", newprofilepicinput, 375);
+                  set_cookie("remprofilepic", newprofilepicinput, 375);
                   console.log('new profile pic set')
               } else if (status === 'notfound') {
                   console.log('not found error, not saving pic');
@@ -297,7 +293,7 @@ window.addEventListener('resize', onResize);
             
     });
 
-  function convertUTCToLocalTime(utcTime) {
+  function convert_UTC_to_local(utcTime) {
 
       const now = new Date();
       const [hours, minutes] = utcTime.split(':').map(Number);
