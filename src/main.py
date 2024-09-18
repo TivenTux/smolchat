@@ -1,8 +1,7 @@
-from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
 from datetime import datetime
 import sqlite3
-import requests
 import pytz
 import os
 from os import environ
