@@ -11,7 +11,6 @@ from constants.secrets import *
 
 
 #conf
-#flask secret key, use ENV var or place constant_flask_secret_key = 'SomeRandomString' in constants/secrets.py
 if environ.get('flask_secret_key') is not None:
     flask_secret_key = os.environ['flask_secret_key']
 else:
